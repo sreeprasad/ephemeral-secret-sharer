@@ -5,7 +5,7 @@ import { generateKey, encryptSecret, exportKey } from '@/lib/encryption'
 
 export default function Home() {
     const [secret, setSecret] = useState('')
-    const [ttl, setTtl] = useState('86400') // 24 hours default
+    const ttl = 300 // Fixed: 5 minutes
     const [generatedLink, setGeneratedLink] = useState('')
     const [loading, setLoading] = useState(false)
 
@@ -74,21 +74,10 @@ export default function Home() {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="ttl" className="block text-sm font-medium text-gray-700 mb-2">
-                            Expires After
-                        </label>
-                        <select
-                            id="ttl"
-                            value={ttl}
-                            onChange={(e) => setTtl(e.target.value)}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                        >
-                            <option value="3600">1 Hour</option>
-                            <option value="21600">6 Hours</option>
-                            <option value="86400">24 Hours</option>
-                            <option value="604800">7 Days</option>
-                        </select>
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                        <p className="text-sm text-blue-800">
+                            <strong>⏱️ Auto-expires in 5 minutes</strong> or after first view
+                        </p>
                     </div>
 
                     <button
