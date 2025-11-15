@@ -9,12 +9,8 @@ export async function GET(
         const { id } = await context.params
         const key = `secret:${id}`
 
-        console.log('Fetching secret with key:', key) // Debug log
-
 
         const data = await kv.get(key)
-
-        console.log('Data found:', data ? 'Yes' : 'No') // Debug log
 
         if (!data) {
             return NextResponse.json(
@@ -27,7 +23,14 @@ export async function GET(
         await kv.del(key)
 
 
-        const { ciphertext, iv } = JSON.parse(data)
+        let parsedData
+        if (typeof data === 'string') {
+            parsedData = JSON.parse(data)
+        } else {
+            parsedData = data
+        }
+
+        const { ciphertext, iv } = parsedData
 
         return NextResponse.json({ ciphertext, iv })
     } catch (error) {
